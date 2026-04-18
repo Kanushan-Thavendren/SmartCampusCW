@@ -8,6 +8,7 @@ import com.kanushan.smartcampuscw.dao.SensorDAO;
 import com.kanushan.smartcampuscw.dao.SensorReadingDAO;
 import com.kanushan.smartcampuscw.model.Sensor;
 import com.kanushan.smartcampuscw.model.SensorReading;
+import com.kanushan.smartcampuscw.exception.SensorUnavailableException;
 
 import java.util.List;
 import javax.ws.rs.GET;
@@ -53,6 +54,10 @@ public class SensorReadingResource {
             return Response.status(Response.Status.NOT_FOUND)
                     .entity("Sensor not found")
                     .build();
+        }
+
+        if ("MAINTENANCE".equalsIgnoreCase(sensor.getStatus())) {
+            throw new SensorUnavailableException("Sensor is in maintenance mode");
         }
 
         readingDAO.addReading(sensorId, reading);
