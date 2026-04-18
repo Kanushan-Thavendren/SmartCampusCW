@@ -48,7 +48,7 @@ public class RoomResource {
     
     @DELETE
     @Path("/{id}")
-    @Produces(MediaType.TEXT_PLAIN)
+    @Produces(MediaType.APPLICATION_JSON)
     public Response deleteRoom(@PathParam("id") String id) {
         boolean deleted = roomDAO.deleteRoom(id);
 

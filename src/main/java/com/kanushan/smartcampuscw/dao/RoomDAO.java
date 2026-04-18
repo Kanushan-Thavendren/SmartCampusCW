@@ -5,6 +5,7 @@
 package com.kanushan.smartcampuscw.dao;
 
 import com.kanushan.smartcampuscw.model.Room;
+import com.kanushan.smartcampuscw.exception.RoomNotEmptyException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,12 +34,17 @@ public class RoomDAO {
     public void addRoom(Room room) {
         rooms.add(room);
     }
-    
+
     public boolean deleteRoom(String roomId) {
+
         Room room = getRoomById(roomId);
 
         if (room == null) {
             return false;
+        }
+
+        if (room.getSensorIds() != null && !room.getSensorIds().isEmpty()) {
+            throw new RoomNotEmptyException("Room still has sensors assigned");
         }
 
         rooms.remove(room);
