@@ -4,15 +4,17 @@
  */
 package com.kanushan.smartcampuscw.resource;
 
-import com.kanushan.smartcampuscw.dao.SensorDAO;
 import com.kanushan.smartcampuscw.dao.RoomDAO;
-import com.kanushan.smartcampuscw.model.Sensor;
+import com.kanushan.smartcampuscw.dao.SensorDAO;
 import com.kanushan.smartcampuscw.model.Room;
-
+import com.kanushan.smartcampuscw.model.Sensor;
+import java.util.List;
+import javax.ws.rs.Consumes;
+import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
-import javax.ws.rs.Consumes;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
@@ -21,6 +23,16 @@ public class SensorResource {
 
     private SensorDAO sensorDAO = new SensorDAO();
     private RoomDAO roomDAO = new RoomDAO();
+
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<Sensor> getSensors(@QueryParam("type") String type) {
+        if (type != null && !type.isEmpty()) {
+            return sensorDAO.getSensorsByType(type);
+        }
+
+        return sensorDAO.getAllSensors();
+    }
 
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
@@ -36,7 +48,6 @@ public class SensorResource {
         }
 
         sensorDAO.addSensor(sensor);
-
         room.getSensorIds().add(sensor.getId());
 
         return Response.status(Response.Status.CREATED)

@@ -19,4 +19,16 @@ public class SensorDAO {
     public void addSensor(Sensor sensor) {
         sensors.add(sensor);
     }
+
+    public List<Sensor> getSensorsByType(String type) {
+        List<Sensor> filteredSensors = new ArrayList<>();
+
+        for (Sensor sensor : sensors) {
+            if (sensor.getType() != null && sensor.getType().equalsIgnoreCase(type)) {
+                filteredSensors.add(sensor);
+            }
+        }
+
+        return filteredSensors;
+    }
 }
