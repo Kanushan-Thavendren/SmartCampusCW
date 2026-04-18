@@ -4,30 +4,60 @@
  */
 package com.kanushan.smartcampuscw.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Room {
-    private int id;
+    private String id;
     private String name;
-    private String building;
     private int capacity;
+    private List<String> sensorIds = new ArrayList<>();
 
-    public Room() {}
+    public Room() {
+    }
 
-    public Room(int id, String name, String building, int capacity) {
+    public Room(String id, String name, int capacity) {
         this.id = id;
         this.name = name;
-        this.building = building;
         this.capacity = capacity;
     }
 
-    public int getId() { return id; }
-    public void setId(int id) { this.id = id; }
+    public Room(String id, String name, int capacity, List<String> sensorIds) {
+        this.id = id;
+        this.name = name;
+        this.capacity = capacity;
+        this.sensorIds = sensorIds;
+    }
 
-    public String getName() { return name; }
-    public void setName(String name) { this.name = name; }
+    public String getId() {
+        return id;
+    }
 
-    public String getBuilding() { return building; }
-    public void setBuilding(String building) { this.building = building; }
+    public void setId(String id) {
+        this.id = id;
+    }
 
-    public int getCapacity() { return capacity; }
-    public void setCapacity(int capacity) { this.capacity = capacity; }
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public int getCapacity() {
+        return capacity;
+    }
+
+    public void setCapacity(int capacity) {
+        this.capacity = capacity;
+    }
+
+    public List<String> getSensorIds() {
+        return sensorIds;
+    }
+
+    public void setSensorIds(List<String> sensorIds) {
+        this.sensorIds = sensorIds;
+    }
 }
