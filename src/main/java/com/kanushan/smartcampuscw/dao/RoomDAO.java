@@ -33,4 +33,15 @@ public class RoomDAO {
     public void addRoom(Room room) {
         rooms.add(room);
     }
+    
+    public boolean deleteRoom(String roomId) {
+        Room room = getRoomById(roomId);
+
+        if (room == null) {
+            return false;
+        }
+
+        rooms.remove(room);
+        return true;
+    }
 }

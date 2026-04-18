@@ -15,6 +15,8 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.PathParam;
+import javax.ws.rs.DELETE;
+import javax.ws.rs.core.Response;
 
 @Path("/rooms")
 public class RoomResource {
@@ -42,5 +44,20 @@ public class RoomResource {
     @Produces(MediaType.APPLICATION_JSON)
     public Room getRoomById(@PathParam("id") String id) {
         return roomDAO.getRoomById(id);
+    }
+    
+    @DELETE
+    @Path("/{id}")
+    @Produces(MediaType.TEXT_PLAIN)
+    public Response deleteRoom(@PathParam("id") String id) {
+        boolean deleted = roomDAO.deleteRoom(id);
+
+        if (deleted) {
+            return Response.ok("Room deleted successfully").build();
+        } else {
+            return Response.status(Response.Status.NOT_FOUND)
+                    .entity("Room not found")
+                    .build();
+        }
     }
 }
