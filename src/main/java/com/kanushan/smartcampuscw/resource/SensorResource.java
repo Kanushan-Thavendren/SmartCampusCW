@@ -8,6 +8,8 @@ import com.kanushan.smartcampuscw.dao.RoomDAO;
 import com.kanushan.smartcampuscw.dao.SensorDAO;
 import com.kanushan.smartcampuscw.model.Room;
 import com.kanushan.smartcampuscw.model.Sensor;
+import com.kanushan.smartcampuscw.exception.LinkedResourceNotFoundException;
+
 import java.util.List;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
@@ -43,9 +45,7 @@ public class SensorResource {
         Room room = roomDAO.getRoomById(sensor.getRoomId());
 
         if (room == null) {
-            return Response.status(Response.Status.BAD_REQUEST)
-                    .entity("Room does not exist")
-                    .build();
+            throw new LinkedResourceNotFoundException("Room does not exist for sensor creation");
         }
 
         sensorDAO.addSensor(sensor);
@@ -55,10 +55,9 @@ public class SensorResource {
                 .entity(sensor)
                 .build();
     }
-    
+
     @Path("/{id}/readings")
     public SensorReadingResource getReadingResource(@PathParam("id") String id) {
         return new SensorReadingResource(id);
     }
 }
-
