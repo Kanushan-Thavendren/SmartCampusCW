@@ -17,6 +17,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.PathParam;
 
 @Path("/sensors")
 public class SensorResource {
@@ -54,4 +55,10 @@ public class SensorResource {
                 .entity(sensor)
                 .build();
     }
+    
+    @Path("/{id}/readings")
+    public SensorReadingResource getReadingResource(@PathParam("id") String id) {
+        return new SensorReadingResource(id);
+    }
 }
+
